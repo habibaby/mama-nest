@@ -202,7 +202,7 @@ export function StartWizard({ kit }: { kit: Kit | null }) {
           </div>
           <p className="text-center text-sm text-ink/60">
             {stage === "pregnant"
-              ? "Timed to arrive in your due-date month, sitting ready before she does."
+              ? "Timed to arrive in your due-date month, sitting ready before baby does."
               : "We'll send this straight away."}
           </p>
           <div className="rounded-2xl bg-blush p-5">

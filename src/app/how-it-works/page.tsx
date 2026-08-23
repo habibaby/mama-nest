@@ -9,7 +9,7 @@ const steps = [
     body: "A couple of quick questions — that's all we need to time everything correctly.",
   },
   {
-    title: "Your kit arrives before she does",
+    title: "Your kit arrives before baby does",
     body: "Sent during your due-date month, so it's ready and waiting, not one more thing to order later.",
   },
   {
