@@ -58,7 +58,7 @@ export default function HomePage() {
             </p>
             <div className="mt-9">
               <Button href="/start" size="lg" icon={Heart}>
-                Begin your Sixth Week
+                Get started
               </Button>
             </div>
           </Container>
@@ -89,7 +89,7 @@ export default function HomePage() {
             Someone should ask how you&apos;re doing too.
           </p>
           <Button href="/start" variant="primary" size="lg" className="bg-gold text-rose-deep hover:bg-gold/90">
-            Begin your Sixth Week
+            Get started
           </Button>
         </Container>
       </section>

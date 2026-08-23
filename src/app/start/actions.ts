@@ -95,7 +95,7 @@ export async function submitIntake(
         {
           price_data: {
             currency: "gbp",
-            product_data: { name: "The Sixth Week Kit" },
+            product_data: { name: "The Mama Nest Kit" },
             unit_amount: input.pricePence,
           },
           quantity: 1,

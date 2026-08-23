@@ -33,7 +33,7 @@ export default function HowItWorksPage() {
         <Header />
         <Container>
           <h1 className="mx-auto max-w-xl text-balance text-center font-heading text-4xl italic text-rose-deep">
-            How The Sixth Week works
+            How Mama Nest works
           </h1>
         </Container>
       </div>
@@ -54,7 +54,7 @@ export default function HowItWorksPage() {
           </ol>
           <div className="mt-12 flex justify-center">
             <Button href="/start" size="lg">
-              Begin your Sixth Week
+              Get started
             </Button>
           </div>
         </Container>

@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 text-center">
         <Logo />
         <p className="text-xs text-ink/50">
-          © {new Date().getFullYear()} The Sixth Week. Made for mothers, by a mother.
+          © {new Date().getFullYear()} Mama Nest. Made for mothers, by a mother.
         </p>
         <div className="flex gap-4 text-xs text-ink/50">
           <Link href="/how-it-works" className="hover:text-rose-deep">

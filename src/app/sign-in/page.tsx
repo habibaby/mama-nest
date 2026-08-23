@@ -18,7 +18,7 @@ export default function SignInPage() {
         <p className="mt-6 text-center text-sm text-ink/50">
           New here?{" "}
           <Link href="/start" className="font-semibold text-rose-deep hover:underline">
-            Begin your Sixth Week
+            Get started
           </Link>
         </p>
       </div>

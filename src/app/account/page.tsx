@@ -84,7 +84,7 @@ export default async function AccountPage() {
 
           {order && (
             <div className="mt-5 flex items-center justify-between rounded-xl bg-blush/60 px-4 py-3 text-sm">
-              <span className="text-ink/70">The Sixth Week Kit</span>
+              <span className="text-ink/70">The Mama Nest Kit</span>
               <span className="font-semibold text-rose-deep">
                 {order.status === "paid" ? "Paid" : "Payment pending"} · {formatGBP(order.amount_pence)}
               </span>

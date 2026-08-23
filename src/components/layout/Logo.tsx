@@ -8,7 +8,7 @@ export function Logo({ dark }: { dark?: boolean }) {
       }`}
     >
       <Flower2 size={20} className="text-gold" />
-      The Sixth Week
+      Mama Nest
     </span>
   );
 }

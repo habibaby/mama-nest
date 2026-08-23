@@ -29,7 +29,7 @@ export default async function DemoCheckoutPage({
       <div className="w-full max-w-md rounded-3xl border border-rose/10 bg-offwhite p-8 shadow-xl shadow-rose-deep/5">
         <h1 className="text-center font-heading text-2xl italic text-rose-deep">Almost there</h1>
         <div className="mt-5 flex items-center justify-between rounded-xl bg-blush px-4 py-3 text-sm">
-          <span className="text-ink/70">The Sixth Week Kit</span>
+          <span className="text-ink/70">The Mama Nest Kit</span>
           <span className="font-semibold text-rose-deep">{formatGBP(order.amount_pence)}</span>
         </div>
         <div className="mt-6">

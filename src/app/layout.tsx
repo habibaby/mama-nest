@@ -15,7 +15,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "The Sixth Week | Postpartum care that's actually about you",
+  title: "Mama Nest | Postpartum care that's actually about you",
   description:
     "Your postpartum care kit and at-home recovery test, sent to arrive before she does — because your six-week check was only ever about the baby.",
 };
