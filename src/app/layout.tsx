@@ -15,18 +15,22 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Mama Nest | Postpartum care that's actually about you",
+  title: "Mama Nest | Postpartum health, understood",
   description:
-    "Your postpartum care kit and at-home recovery test, sent to arrive before baby does — because your six-week check was only ever about the baby.",
+    "Thoughtfully designed at-home health testing for mothers after birth. Because your health deserves to be understood too.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"
       className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-offwhite font-sans text-ink">
+      <body className="min-h-full bg-ivory font-sans text-espresso">
         {children}
       </body>
     </html>
