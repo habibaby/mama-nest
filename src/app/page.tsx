@@ -9,10 +9,10 @@ import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 
 const heroImages = [
-  "/images/mama-nest bathroom.jpg",
-  "/images/mama-nest walking.jpg",
-  "/images/mama-nest black woman.JPG",
-  "/images/mama-nest looking window.JPG",
+  "/images/Mama-nest bathroom.jpg",
+  "/images/Mama-nest black woman.JPG",
+  "/images/Mama-nest looking window.JPG",
+  "/images/Mama-nest walking.jpg",
 ];
 
 const features = [
@@ -50,11 +50,14 @@ export default function HomePage() {
   return (
     <main className="bg-[#F8F5F0] text-[#302824]">
       {/* =====================================================
-          HERO — FULL-WIDTH EDITORIAL SLIDESHOW
+          HERO SLIDESHOW
       ====================================================== */}
 
       <section className="relative min-h-screen overflow-hidden">
-        {/* Slideshow images */}
+        {/* Header */}
+        <Header />
+
+        {/* Slideshow */}
         <div className="absolute inset-0">
           {heroImages.map((image, index) => (
             <img
@@ -68,16 +71,13 @@ export default function HomePage() {
             />
           ))}
 
-          {/* Warm editorial overlay */}
+          {/* Editorial overlays */}
           <div className="absolute inset-0 bg-[#302824]/25" />
 
-          <div className="absolute inset-0 bg-gradient-to-r from-[#302824]/70 via-[#302824]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#302824]/75 via-[#302824]/35 to-transparent" />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#302824]/55 via-transparent to-[#302824]/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#302824]/55 via-transparent to-transparent" />
         </div>
-
-        {/* Header */}
-        <Header />
 
         {/* Hero content */}
         <Container className="relative z-10 flex min-h-screen items-end pb-20 pt-32 lg:pb-28">
@@ -141,13 +141,13 @@ export default function HomePage() {
           </div>
         </Container>
 
-        {/* Slide indicators */}
+        {/* Slideshow controls */}
         <div className="absolute bottom-8 right-6 z-20 flex items-center gap-2 lg:right-12">
           {heroImages.map((_, index) => (
             <button
               key={index}
               type="button"
-              aria-label={`Show image ${index + 1}`}
+              aria-label={`Show slide ${index + 1}`}
               onClick={() => setCurrentImage(index)}
               className={`h-1 rounded-full transition-all duration-500 ${
                 index === currentImage
@@ -258,7 +258,7 @@ export default function HomePage() {
             <Reveal>
               <div className="relative aspect-[4/5] overflow-hidden rounded-[32px]">
                 <img
-                  src="/images/mama-nest black woman.JPG"
+                  src="/images/mama-resting.JPG"
                   alt="Mother taking a quiet moment for herself at home"
                   className="h-full w-full object-cover"
                 />
