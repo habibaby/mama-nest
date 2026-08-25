@@ -1,29 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  /* Lush, feminine palette — deep rose + gold on warm cream, not pale pastel */
-  --rose: #b3475a;
-  --rose-deep: #6e2840;
-  --blush: #f7e3e1;
-  --cream: #fdf5ee;
-  --offwhite: #fffbf7;
-  --gold: #c69a3a;
-  --sage: #6f8f66;
-  --ink: #3a2530;
+  /* =====================================================
+     MAMA NEST — LUXURY EDITORIAL PALETTE
+     ===================================================== */
 
-  --background: var(--offwhite);
-  --foreground: var(--ink);
+  --ivory: #f7f4ef;
+  --paper: #fbfaf7;
+  --stone: #e8e2da;
+
+  --espresso: #292421;
+  --espresso-soft: #514943;
+
+  --oxblood: #713f42;
+  --oxblood-light: #9b6868;
+
+  --sand: #cdbfb2;
+  --blush: #e8d6d0;
+
+  --background: var(--ivory);
+  --foreground: var(--espresso);
 }
 
 @theme inline {
-  --color-rose: var(--rose);
-  --color-rose-deep: var(--rose-deep);
+  --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+
+  --color-espresso: var(--espresso);
+  --color-espresso-soft: var(--espresso-soft);
+
+  --color-oxblood: var(--oxblood);
+  --color-oxblood-light: var(--oxblood-light);
+
+  --color-sand: var(--sand);
   --color-blush: var(--blush);
-  --color-cream: var(--cream);
-  --color-offwhite: var(--offwhite);
-  --color-gold: var(--gold);
-  --color-sage: var(--sage);
-  --color-ink: var(--ink);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -32,28 +43,137 @@
   --font-sans: var(--font-manrope);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+/* =====================================================
+   BASE
+   ===================================================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .animate-float {
-    animation: sixthweek-float 7s ease-in-out infinite;
-  }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
+/* =====================================================
+   SELECTION
+   ===================================================== */
+
+::selection {
+  background: var(--oxblood);
+  color: var(--paper);
+}
+
+/* =====================================================
+   IMAGES
+   ===================================================== */
+
+img {
+  max-width: 100%;
+}
+
+/* =====================================================
+   LINKS
+   ===================================================== */
+
+a {
+  text-decoration: none;
+}
+
+/* =====================================================
+   LUXURY REVEAL ANIMATION
+   ===================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   }
+
   .reveal.reveal-in {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes sixthweek-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* =====================================================
+   SUBTLE IMAGE MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .luxury-image {
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .luxury-image:hover {
+    transform: scale(1.025);
+  }
+}
+
+/* =====================================================
+   TYPOGRAPHY
+   ===================================================== */
+
+.font-editorial {
+  font-family: var(--font-fraunces), serif;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* =====================================================
+   CUSTOM SCROLLBAR
+   ===================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ivory);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sand);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--oxblood-light);
+}
+
+/* =====================================================
+   FOCUS STATES
+   ===================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 4px;
+}
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
