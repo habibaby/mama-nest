@@ -1,456 +1,217 @@
-import { ArrowRight, Check } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
-import { Reveal } from "@/components/ui/Reveal";
 
-const tests = [
+const slides = [
   {
-    number: "01",
-    title: "Iron",
-    text: "Check your iron status.",
+    image: "/images/mama-hero.JPG",
+    alt: "Mother resting peacefully at home",
   },
   {
-    number: "02",
-    title: "Thyroid",
-    text: "Check your thyroid health.",
-  },
-  {
-    number: "03",
-    title: "Vitamin D",
-    text: "Check your vitamin D level.",
+    image: "/images/mama-resting.JPG",
+    alt: "Mother taking a quiet moment at home",
   },
 ];
 
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((current) => (current + 1) % slides.length);
+    }, 7000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <main className="bg-[#F8F5F0] text-[#302824]">
-
       {/* =====================================================
-          HERO
+          LUXURY HERO SLIDESHOW
       ====================================================== */}
 
-      <section className="relative min-h-screen overflow-hidden bg-[#F8F5F0]">
-        <Header />
+      <section className="relative h-[92vh] min-h-[680px] w-full overflow-hidden bg-[#302824]">
+        {/* SLIDES */}
 
-        <Container className="relative grid min-h-screen items-center gap-12 pt-28 pb-16 lg:grid-cols-[0.8fr_1.2fr] lg:pt-24">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.image}
+            className={`absolute inset-0 transition-opacity duration-[1800ms] ease-in-out ${
+              index === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              className="h-full w-full object-cover"
+            />
 
-          {/* TEXT */}
+            {/* Elegant dark gradient for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#211B18]/65 via-[#211B18]/10 to-[#211B18]/20" />
 
-          <div className="relative z-10 max-w-xl">
-
-            <Reveal>
-              <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-[#9B6664]">
-                Mama Nest
-              </p>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <h1 className="mt-7 font-heading text-[64px] leading-[0.9] tracking-[-0.045em] text-[#302824] sm:text-7xl lg:text-[92px]">
-                Your body
-                <br />
-                deserves
-                <br />
-                <span className="italic text-[#9B6664]">
-                  a check-in.
-                </span>
-              </h1>
-            </Reveal>
-
-            <Reveal delay={180}>
-              <p className="mt-7 text-sm tracking-wide text-[#756B65]">
-                Iron · Thyroid · Vitamin D
-              </p>
-            </Reveal>
-
-            <Reveal delay={260}>
-              <div className="mt-9">
-                <Button
-                  href="/start"
-                  size="lg"
-                  icon={ArrowRight}
-                  className="rounded-full bg-[#302824] px-8 text-[#F8F5F0] shadow-xl shadow-[#302824]/10 hover:bg-[#453A35]"
-                >
-                  Explore the test
-                </Button>
-              </div>
-            </Reveal>
-
+            {/* Soft ivory glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(30,24,21,0.18)_100%)]" />
           </div>
+        ))}
 
-          {/* IMAGE */}
+        {/* HEADER */}
 
-          <Reveal delay={160}>
-            <div className="relative mx-auto w-full max-w-[620px]">
+        <div className="absolute inset-x-0 top-0 z-30">
+          <Header />
+        </div>
 
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[260px_260px_36px_36px] bg-[#E5D6CB] shadow-[0_40px_100px_rgba(48,40,36,0.14)]">
+        {/* MINIMAL HERO CONTENT */}
 
-                <img
-                  src="/images/mama-hero.JPG"
-                  alt="Mother resting peacefully at home"
-                  className="h-full w-full object-cover"
-                />
+        <div className="absolute inset-0 z-20 flex items-end justify-center px-6 pb-20 text-center sm:pb-24 lg:pb-28">
+          <div className="max-w-3xl">
+            <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.4em] text-[#F8F5F0]/80">
+              Mama Nest · At-home health testing
+            </p>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#302824]/20 via-transparent to-transparent" />
+            <h1 className="font-heading text-6xl leading-[0.95] tracking-[-0.04em] text-[#F8F5F0] sm:text-7xl lg:text-[96px]">
+              Return to
+              <br />
+              <span className="italic">yourself.</span>
+            </h1>
 
-              </div>
-
-              {/* Small floating detail */}
-
-              <div className="absolute bottom-6 left-6 rounded-full border border-white/60 bg-[#F8F5F0]/90 px-5 py-3 shadow-lg backdrop-blur-md">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-[#756B65]">
-                  At-home testing
-                </p>
-              </div>
-
+            <div className="mt-8">
+              <Button
+                href="/start"
+                size="lg"
+                icon={ArrowRight}
+                className="rounded-full bg-[#F8F5F0] px-9 py-6 text-[#302824] shadow-[0_15px_50px_rgba(0,0,0,0.18)] transition-all hover:bg-white hover:shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
+              >
+                Explore testing
+              </Button>
             </div>
-          </Reveal>
+          </div>
+        </div>
 
-        </Container>
+        {/* SLIDE INDICATORS */}
+
+        <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Go to slide ${index + 1}`}
+              onClick={() => setCurrentSlide(index)}
+              className={`h-1 rounded-full transition-all duration-700 ${
+                index === currentSlide
+                  ? "w-10 bg-[#F8F5F0]"
+                  : "w-2 bg-[#F8F5F0]/50"
+              }`}
+            />
+          ))}
+        </div>
       </section>
 
-
       {/* =====================================================
-          INTRO
+          QUIET INTRO
       ====================================================== */}
 
-      <section className="bg-[#EFE7E0] py-28 lg:py-36">
+      <section className="bg-[#F8F5F0] px-6 py-24 lg:py-32">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#9B6664]">
+            Postpartum health
+          </p>
 
-        <Container>
+          <h2 className="mt-6 font-heading text-5xl leading-[1.05] tracking-[-0.03em] text-[#302824] sm:text-6xl">
+            Your baby isn't the only one
+            <span className="italic text-[#9B6664]"> worth checking on.</span>
+          </h2>
 
-          <div className="mx-auto max-w-4xl text-center">
+          <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-[#655B56]">
+            Thoughtful at-home testing for three important postpartum health
+            markers: iron, thyroid and vitamin D.
+          </p>
+        </div>
+      </section>
 
-            <Reveal>
-              <p className="text-[11px] uppercase tracking-[0.35em] text-[#9B6664]">
-                For Mama
-              </p>
-            </Reveal>
+      {/* =====================================================
+          TESTS
+      ====================================================== */}
 
-            <Reveal delay={100}>
-              <h2 className="mt-7 font-heading text-5xl leading-[1] tracking-[-0.035em] sm:text-6xl lg:text-8xl">
-                Everyone checks
-                <br />
-                on the baby.
-                <br />
-                <span className="italic text-[#9B6664]">
-                  Who checks on you?
+      <section className="bg-[#302824] py-24 text-[#F8F5F0] lg:py-32">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mb-16">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D1A39A]">
+              The Mama Nest test
+            </p>
+
+            <h2 className="mt-6 max-w-2xl font-heading text-5xl leading-[1] sm:text-6xl lg:text-7xl">
+              A simple check-in
+              <br />
+              <span className="italic text-[#D1A39A]">
+                for your body.
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid border-t border-[#514742] md:grid-cols-3">
+            {[
+              {
+                number: "01",
+                title: "Iron",
+              },
+              {
+                number: "02",
+                title: "Thyroid",
+              },
+              {
+                number: "03",
+                title: "Vitamin D",
+              },
+            ].map((test) => (
+              <div
+                key={test.number}
+                className="border-b border-[#514742] px-2 py-10 md:border-b-0 md:border-r md:px-8 md:last:border-r-0"
+              >
+                <span className="font-mono text-[10px] tracking-[0.3em] text-[#92706C]">
+                  {test.number}
                 </span>
-              </h2>
-            </Reveal>
 
-            <Reveal delay={180}>
-              <p className="mx-auto mt-8 max-w-lg text-sm leading-7 text-[#756B65]">
-                A simple way to check in on three important health markers
-                after birth.
-              </p>
-            </Reveal>
-
+                <h3 className="mt-12 font-heading text-4xl italic sm:text-5xl">
+                  {test.title}
+                </h3>
+              </div>
+            ))}
           </div>
-
-        </Container>
-
+        </div>
       </section>
-
-
-      {/* =====================================================
-          TEST KIT
-      ====================================================== */}
-
-      <section className="bg-[#302824] py-28 text-[#F8F5F0] lg:py-36">
-
-        <Container>
-
-          <div className="grid gap-20 lg:grid-cols-[0.7fr_1.3fr]">
-
-            {/* LEFT */}
-
-            <Reveal>
-
-              <div className="lg:sticky lg:top-24">
-
-                <p className="text-[11px] uppercase tracking-[0.35em] text-[#D1A39A]">
-                  The test
-                </p>
-
-                <h2 className="mt-7 font-heading text-5xl leading-[0.95] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
-                  Three checks.
-                  <br />
-                  One simple
-                  <br />
-                  <span className="italic text-[#D1A39A]">
-                    check-in.
-                  </span>
-                </h2>
-
-                <div className="mt-9">
-                  <Button
-                    href="/start"
-                    size="lg"
-                    icon={ArrowRight}
-                    className="rounded-full bg-[#F8F5F0] px-8 text-[#302824] hover:bg-white"
-                  >
-                    Explore the test
-                  </Button>
-                </div>
-
-              </div>
-
-            </Reveal>
-
-
-            {/* TESTS */}
-
-            <div className="divide-y divide-[#514742]">
-
-              {tests.map((test, index) => (
-
-                <Reveal
-                  key={test.title}
-                  delay={index * 100}
-                >
-
-                  <div className="flex items-center justify-between gap-8 py-12">
-
-                    <div className="flex items-start gap-8">
-
-                      <span className="pt-2 font-mono text-[10px] tracking-[0.2em] text-[#92706C]">
-                        {test.number}
-                      </span>
-
-                      <div>
-
-                        <h3 className="font-heading text-4xl italic sm:text-5xl">
-                          {test.title}
-                        </h3>
-
-                        <p className="mt-3 text-sm text-[#C9BFBA]">
-                          {test.text}
-                        </p>
-
-                      </div>
-
-                    </div>
-
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#665953]">
-                      <Check
-                        size={14}
-                        className="text-[#D1A39A]"
-                      />
-                    </div>
-
-                  </div>
-
-                </Reveal>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </Container>
-
-      </section>
-
-
-      {/* =====================================================
-          LIFESTYLE IMAGE
-      ====================================================== */}
-
-      <section className="bg-[#F8F5F0] py-28 lg:py-36">
-
-        <Container>
-
-          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-
-            <Reveal>
-
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[32px]">
-
-                <img
-                  src="/images/mama-resting.JPG"
-                  alt="Mother taking a quiet moment at home"
-                  className="h-full w-full object-cover"
-                />
-
-              </div>
-
-            </Reveal>
-
-
-            <Reveal delay={120}>
-
-              <div className="max-w-xl">
-
-                <p className="text-[11px] uppercase tracking-[0.35em] text-[#9B6664]">
-                  A moment for you
-                </p>
-
-                <h2 className="mt-7 font-heading text-5xl leading-[0.98] tracking-[-0.035em] sm:text-6xl lg:text-7xl">
-                  Take a moment
-                  <br />
-                  to check on
-                  <br />
-                  <span className="italic text-[#9B6664]">
-                    you.
-                  </span>
-                </h2>
-
-                <div className="mt-9">
-                  <Button
-                    href="/start"
-                    size="lg"
-                    icon={ArrowRight}
-                    className="rounded-full bg-[#302824] px-8 text-[#F8F5F0] hover:bg-[#453A35]"
-                  >
-                    Explore the test
-                  </Button>
-                </div>
-
-              </div>
-
-            </Reveal>
-
-          </div>
-
-        </Container>
-
-      </section>
-
-
-      {/* =====================================================
-          HOW IT WORKS
-      ====================================================== */}
-
-      <section className="border-t border-[#DED6D0] bg-[#EFE7E0] py-24 lg:py-28">
-
-        <Container>
-
-          <div className="flex flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
-
-            <Reveal>
-
-              <div>
-
-                <p className="text-[11px] uppercase tracking-[0.35em] text-[#9B6664]">
-                  Simple by design
-                </p>
-
-                <h2 className="mt-6 font-heading text-5xl leading-none sm:text-6xl">
-                  Order.
-                  <br />
-                  Test.
-                  <br />
-                  <span className="italic text-[#9B6664]">
-                    Understand.
-                  </span>
-                </h2>
-
-              </div>
-
-            </Reveal>
-
-
-            <Reveal delay={120}>
-
-              <div className="flex max-w-md flex-col gap-6">
-
-                <div className="flex items-center gap-5 border-b border-[#D5C9C0] pb-5">
-                  <span className="font-mono text-[10px] text-[#9B6664]">
-                    01
-                  </span>
-
-                  <span className="text-sm">
-                    Order your test
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-5 border-b border-[#D5C9C0] pb-5">
-                  <span className="font-mono text-[10px] text-[#9B6664]">
-                    02
-                  </span>
-
-                  <span className="text-sm">
-                    Test from home
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-5">
-                  <span className="font-mono text-[10px] text-[#9B6664]">
-                    03
-                  </span>
-
-                  <span className="text-sm">
-                    Understand your results
-                  </span>
-                </div>
-
-              </div>
-
-            </Reveal>
-
-          </div>
-
-        </Container>
-
-      </section>
-
 
       {/* =====================================================
           FINAL CTA
       ====================================================== */}
 
-      <section className="relative overflow-hidden bg-[#9B6664] py-32 text-[#F8F5F0] lg:py-40">
+      <section className="bg-[#EFE7E0] px-6 py-24 text-center lg:py-32">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#9B6664]">
+          Mama Nest
+        </p>
 
-        <Container className="text-center">
+        <h2 className="mx-auto mt-6 max-w-3xl font-heading text-5xl leading-[1.05] text-[#302824] sm:text-6xl">
+          Make space for
+          <br />
+          <span className="italic text-[#9B6664]">your health.</span>
+        </h2>
 
-          <Reveal>
-
-            <p className="text-[11px] uppercase tracking-[0.35em] text-[#EBD3CC]">
-              Mama Nest
-            </p>
-
-          </Reveal>
-
-          <Reveal delay={100}>
-
-            <h2 className="mx-auto mt-7 max-w-4xl font-heading text-5xl leading-[0.95] tracking-[-0.035em] sm:text-6xl lg:text-8xl">
-              Your health
-              <br />
-              deserves
-              <br />
-              <span className="italic">
-                attention too.
-              </span>
-            </h2>
-
-          </Reveal>
-
-          <Reveal delay={180}>
-
-            <div className="mt-10">
-
-              <Button
-                href="/start"
-                size="lg"
-                icon={ArrowRight}
-                className="rounded-full bg-[#F8F5F0] px-9 text-[#302824] hover:bg-white"
-              >
-                Start your health check
-              </Button>
-
-            </div>
-
-          </Reveal>
-
-        </Container>
-
+        <div className="mt-9">
+          <Button
+            href="/start"
+            size="lg"
+            icon={ArrowRight}
+            className="rounded-full bg-[#302824] px-9 text-[#F8F5F0] hover:bg-[#453A35]"
+          >
+            Start your health check
+          </Button>
+        </div>
       </section>
 
-
       <Footer />
-
     </main>
   );
 }
