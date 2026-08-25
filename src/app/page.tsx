@@ -343,8 +343,8 @@ export default function HomePage() {
               <p className="mt-9 max-w-[430px] text-sm leading-7 text-espresso-soft">
                 You shouldn't have to rearrange your life around your health.
                 Mama Nest brings thoughtful testing closer to home, so you
-                can make time for yourself without adding another journey 
-          
+                can make time for yourself without adding another journey to
+                your day.
               </p>
 
               <a
