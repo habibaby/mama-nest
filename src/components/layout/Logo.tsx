@@ -1,11 +1,14 @@
+import Image from "next/image";
+
 export function Logo({ dark }: { dark?: boolean }) {
   return (
-    <span
-      className={`font-heading text-[25px] font-medium tracking-[-0.04em] ${
-        dark ? "text-ivory" : "text-espresso"
-      }`}
-    >
-      Mama Nest
-    </span>
+    <Image
+      src="/images/mama-nest-logo.JPG"
+      alt="Mama Nest"
+      width={160}
+      height={50}
+      priority
+      className="h-auto w-[140px] object-contain"
+    />
   );
 }
