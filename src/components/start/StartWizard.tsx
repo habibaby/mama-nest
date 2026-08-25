@@ -2,7 +2,12 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check, Loader2 } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Loader2,
+  Check,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { cn, formatGBP } from "@/lib/utils";
 import type { Kit } from "@/lib/types";
@@ -10,12 +15,12 @@ import { submitIntake } from "@/app/start/actions";
 
 type Stage = "pregnant" | "newborn";
 
-const STEPS = [
-  "Stage",
-  "About you",
-  "Account",
+const STEP_LABELS = [
+  "You",
+  "A few details",
+  "Your account",
   "Delivery",
-  "Review",
+  "Your check",
 ];
 
 export function StartWizard({ kit }: { kit: Kit | null }) {
@@ -42,9 +47,11 @@ export function StartWizard({ kit }: { kit: Kit | null }) {
 
   const canContinue = useMemo(() => {
     if (step === 0) {
-      if (stage === "pregnant") return Boolean(edd);
-      if (stage === "newborn") return Boolean(babyDob);
-      return false;
+      return stage === "pregnant"
+        ? Boolean(edd)
+        : stage === "newborn"
+          ? Boolean(babyDob)
+          : false;
     }
 
     if (step === 1) {
@@ -52,19 +59,11 @@ export function StartWizard({ kit }: { kit: Kit | null }) {
     }
 
     if (step === 2) {
-      return Boolean(
-        fullName.trim() &&
-          email.trim() &&
-          password.length >= 8
-      );
+      return Boolean(fullName && email && password.length >= 8);
     }
 
     if (step === 3) {
-      return Boolean(
-        addressLine1.trim() &&
-          city.trim() &&
-          postcode.trim()
-      );
+      return Boolean(addressLine1 && city && postcode);
     }
 
     return true;
@@ -117,434 +116,332 @@ export function StartWizard({ kit }: { kit: Kit | null }) {
   }
 
   return (
-    <div className="mx-auto w-full max-w-xl">
-
+    <div className="w-full max-w-lg rounded-3xl border border-rose/10 bg-offwhite p-8 shadow-xl shadow-rose-deep/5 sm:p-10">
       {/* Progress */}
 
-      <div className="mb-10 flex items-center justify-between">
-
-        <div className="flex items-center gap-2">
-          {STEPS.map((label, index) => (
-            <div
-              key={label}
-              className={cn(
-                "h-1 rounded-full transition-all duration-500",
-                index === step
-                  ? "w-10 bg-[#9B6664]"
-                  : index < step
-                    ? "w-5 bg-[#9B6664]/50"
-                    : "w-5 bg-[#D8CEC7]"
-              )}
-            />
-          ))}
-        </div>
-
-        <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9B6664]">
-          {step + 1} / {STEPS.length}
-        </span>
-
+      <div className="mb-8 flex items-center justify-center gap-2">
+        {STEP_LABELS.map((label, i) => (
+          <div
+            key={label}
+            className={cn(
+              "h-1.5 rounded-full transition-all",
+              i === step
+                ? "w-8 bg-rose"
+                : i < step
+                  ? "w-4 bg-rose/40"
+                  : "w-4 bg-rose/15"
+            )}
+          />
+        ))}
       </div>
 
-      {/* Main content */}
+      {/* STEP 1 */}
 
-      <div className="rounded-[32px] border border-[#DED6D0] bg-[#FFFCF9] p-7 shadow-[0_25px_80px_rgba(48,40,36,0.07)] sm:p-10">
+      {step === 0 && (
+        <div className="flex flex-col gap-5">
+          <h2 className="text-center font-heading text-2xl italic text-rose-deep">
+            Where are you right now?
+          </h2>
 
-        {/* STEP 1 */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => setStage("pregnant")}
+              className={cn(
+                "rounded-2xl border-2 p-5 text-left transition-colors",
+                stage === "pregnant"
+                  ? "border-rose bg-blush"
+                  : "border-rose/15 hover:border-rose/40"
+              )}
+            >
+              <p className="font-heading text-lg italic text-rose-deep">
+                I&apos;m expecting
+              </p>
 
-        {step === 0 && (
-          <div className="space-y-8">
+              <p className="mt-1 text-xs text-ink/60">
+                We&apos;ll time your health check to your due date.
+              </p>
+            </button>
 
-            <StepHeading
-              eyebrow="Let's begin"
-              title="Where are you right now?"
-              description="We'll use this to make sure your test reaches you at the right time."
-            />
+            <button
+              type="button"
+              onClick={() => setStage("newborn")}
+              className={cn(
+                "rounded-2xl border-2 p-5 text-left transition-colors",
+                stage === "newborn"
+                  ? "border-rose bg-blush"
+                  : "border-rose/15 hover:border-rose/40"
+              )}
+            >
+              <p className="font-heading text-lg italic text-rose-deep">
+                I&apos;ve just had my baby
+              </p>
 
-            <div className="grid gap-3 sm:grid-cols-2">
+              <p className="mt-1 text-xs text-ink/60">
+                Tell us when your baby was born.
+              </p>
+            </button>
+          </div>
 
-              <Choice
-                selected={stage === "pregnant"}
-                onClick={() => setStage("pregnant")}
-                title="I'm expecting"
-                description="I'm still pregnant."
-              />
+          {stage === "pregnant" && (
+            <label className="flex flex-col gap-1.5 text-sm">
+              <span className="font-medium text-ink/80">
+                Your due date
+              </span>
 
-              <Choice
-                selected={stage === "newborn"}
-                onClick={() => setStage("newborn")}
-                title="I've had my baby"
-                description="I'm in my postpartum period."
-              />
-
-            </div>
-
-            {stage === "pregnant" && (
-              <Field
-                label="Your due date"
+              <input
                 type="date"
                 value={edd}
-                onChange={setEdd}
+                onChange={(e) => setEdd(e.target.value)}
+                className="rounded-xl border border-rose/20 bg-offwhite px-4 py-2.5 outline-none focus:border-rose"
               />
-            )}
+            </label>
+          )}
 
-            {stage === "newborn" && (
-              <Field
-                label="Baby's date of birth"
+          {stage === "newborn" && (
+            <label className="flex flex-col gap-1.5 text-sm">
+              <span className="font-medium text-ink/80">
+                Baby&apos;s date of birth
+              </span>
+
+              <input
                 type="date"
                 value={babyDob}
-                onChange={setBabyDob}
+                onChange={(e) => setBabyDob(e.target.value)}
+                className="rounded-xl border border-rose/20 bg-offwhite px-4 py-2.5 outline-none focus:border-rose"
               />
-            )}
-
-          </div>
-        )}
-
-        {/* STEP 2 */}
-
-        {step === 1 && (
-          <div className="space-y-8">
-
-            <StepHeading
-              eyebrow="A little about you"
-              title="One quick question."
-              description="This helps us understand where you are in your motherhood journey."
-            />
-
-            <div className="grid grid-cols-2 gap-3">
-
-              <Choice
-                selected={isFirstBaby === true}
-                onClick={() => setIsFirstBaby(true)}
-                title="First baby"
-              />
-
-              <Choice
-                selected={isFirstBaby === false}
-                onClick={() => setIsFirstBaby(false)}
-                title="Not my first"
-              />
-
-            </div>
-
-          </div>
-        )}
-
-        {/* STEP 3 */}
-
-        {step === 2 && (
-          <div className="space-y-7">
-
-            <StepHeading
-              eyebrow="Your details"
-              title="Let's get to know you."
-              description="We'll use these details to create your secure Mama Nest account."
-            />
-
-            <div className="space-y-4">
-
-              <Field
-                label="Full name"
-                value={fullName}
-                onChange={setFullName}
-              />
-
-              <Field
-                label="Email"
-                type="email"
-                value={email}
-                onChange={setEmail}
-              />
-
-              <Field
-                label="Password"
-                type="password"
-                value={password}
-                onChange={setPassword}
-                hint="At least 8 characters"
-              />
-
-              <Field
-                label="Phone"
-                value={phone}
-                onChange={setPhone}
-                required={false}
-              />
-
-            </div>
-
-          </div>
-        )}
-
-        {/* STEP 4 */}
-
-        {step === 3 && (
-          <div className="space-y-7">
-
-            <StepHeading
-              eyebrow="Delivery"
-              title="Where should we send it?"
-              description="Your test will be delivered discreetly to your chosen address."
-            />
-
-            <div className="space-y-4">
-
-              <Field
-                label="Address"
-                value={addressLine1}
-                onChange={setAddressLine1}
-              />
-
-              <Field
-                label="Address line 2"
-                value={addressLine2}
-                onChange={setAddressLine2}
-                required={false}
-              />
-
-              <div className="grid grid-cols-2 gap-3">
-
-                <Field
-                  label="City"
-                  value={city}
-                  onChange={setCity}
-                />
-
-                <Field
-                  label="Postcode"
-                  value={postcode}
-                  onChange={setPostcode}
-                />
-
-              </div>
-
-            </div>
-
-          </div>
-        )}
-
-        {/* STEP 5 — REVIEW */}
-
-        {step === 4 && kit && (
-          <div className="space-y-8">
-
-            <StepHeading
-              eyebrow="Your Mama Nest test"
-              title="A simple check-in for your body."
-              description="Three important health markers, brought together in one at-home test."
-            />
-
-            {/* TEST PANEL */}
-
-            <div className="overflow-hidden rounded-[24px] border border-[#DED6D0]">
-
-              <div className="bg-[#302824] px-6 py-5 text-[#F8F5F0]">
-
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#D1A39A]">
-                  Your health test
-                </p>
-
-                <h3 className="mt-2 font-heading text-2xl italic">
-                  {kit.name}
-                </h3>
-
-              </div>
-
-              <div className="divide-y divide-[#E5DDD7] bg-[#F8F5F0]">
-
-                {kit.testPanel.map((test, index) => (
-                  <div
-                    key={test}
-                    className="flex items-center gap-4 px-6 py-5"
-                  >
-
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#9B6664]/10 text-[#9B6664]">
-                      <Check size={14} />
-                    </span>
-
-                    <span className="font-medium text-[#403630]">
-                      {test}
-                    </span>
-
-                  </div>
-                ))}
-
-              </div>
-
-            </div>
-
-            {/* PRICE */}
-
-            <div className="flex items-end justify-between border-t border-[#DED6D0] pt-6">
-
-              <div>
-                <p className="text-xs text-[#756B65]">
-                  One-off payment
-                </p>
-
-                <p className="mt-1 text-xs text-[#9A8F89]">
-                  No subscription
-                </p>
-              </div>
-
-              <p className="font-heading text-3xl italic text-[#302824]">
-                {formatGBP(kit.pricePence)}
-              </p>
-
-            </div>
-
-            {error && (
-              <p className="rounded-xl bg-red-50 px-4 py-3 text-center text-sm text-red-700">
-                {error}
-              </p>
-            )}
-
-          </div>
-        )}
-
-        {/* NAVIGATION */}
-
-        <div className="mt-10 flex items-center justify-between border-t border-[#E5DDD7] pt-6">
-
-          {step > 0 ? (
-            <Button
-              variant="ghost"
-              size="md"
-              icon={ArrowLeft}
-              onClick={() => setStep((current) => current - 1)}
-              disabled={submitting}
-            >
-              Back
-            </Button>
-          ) : (
-            <span />
+            </label>
           )}
-
-          {step < 4 ? (
-            <Button
-              size="md"
-              icon={ArrowRight}
-              iconPosition="right"
-              disabled={!canContinue}
-              className={cn(
-                "rounded-full bg-[#302824] px-7 text-[#F8F5F0] hover:bg-[#453A35]",
-                !canContinue && "cursor-not-allowed opacity-35"
-              )}
-              onClick={() => setStep((current) => current + 1)}
-            >
-              Continue
-            </Button>
-          ) : (
-            <Button
-              size="md"
-              icon={submitting ? Loader2 : ArrowRight}
-              iconPosition="right"
-              disabled={submitting}
-              className="rounded-full bg-[#302824] px-7 text-[#F8F5F0] hover:bg-[#453A35]"
-              onClick={handleSubmit}
-            >
-              {submitting ? "Preparing…" : "Continue to payment"}
-            </Button>
-          )}
-
         </div>
-
-      </div>
-
-    </div>
-  );
-}
-
-/* ============================================================
-   STEP HEADING
-============================================================ */
-
-function StepHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
-  return (
-    <div>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#9B6664]">
-        {eyebrow}
-      </p>
-
-      <h2 className="mt-3 font-heading text-3xl leading-tight tracking-[-0.02em] text-[#302824] sm:text-4xl">
-        {title}
-      </h2>
-
-      <p className="mt-3 max-w-md text-sm leading-6 text-[#756B65]">
-        {description}
-      </p>
-    </div>
-  );
-}
-
-/* ============================================================
-   CHOICE
-============================================================ */
-
-function Choice({
-  selected,
-  onClick,
-  title,
-  description,
-}: {
-  selected: boolean;
-  onClick: () => void;
-  title: string;
-  description?: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "group rounded-[20px] border p-5 text-left transition-all duration-300",
-        selected
-          ? "border-[#9B6664] bg-[#EFE2DD] shadow-sm"
-          : "border-[#DED6D0] bg-[#FFFCF9] hover:border-[#B99A91] hover:bg-[#FAF5F1]"
       )}
-    >
-      <div className="flex items-start justify-between gap-4">
 
-        <div>
+      {/* STEP 2 */}
 
-          <p className="font-heading text-xl italic text-[#302824]">
-            {title}
-          </p>
+      {step === 1 && (
+        <div className="flex flex-col gap-5">
+          <h2 className="text-center font-heading text-2xl italic text-rose-deep">
+            Just one quick question.
+          </h2>
 
-          {description && (
-            <p className="mt-1 text-xs leading-5 text-[#756B65]">
-              {description}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setIsFirstBaby(true)}
+              className={cn(
+                "rounded-2xl border-2 p-4 text-center transition-colors",
+                isFirstBaby === true
+                  ? "border-rose bg-blush"
+                  : "border-rose/15 hover:border-rose/40"
+              )}
+            >
+              First baby
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsFirstBaby(false)}
+              className={cn(
+                "rounded-2xl border-2 p-4 text-center transition-colors",
+                isFirstBaby === false
+                  ? "border-rose bg-blush"
+                  : "border-rose/15 hover:border-rose/40"
+              )}
+            >
+              Not my first
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3 */}
+
+      {step === 2 && (
+        <div className="flex flex-col gap-4">
+          <h2 className="text-center font-heading text-2xl italic text-rose-deep">
+            Create your account
+          </h2>
+
+          <Field
+            label="Your name"
+            value={fullName}
+            onChange={setFullName}
+          />
+
+          <Field
+            label="Email"
+            type="email"
+            value={email}
+            onChange={setEmail}
+          />
+
+          <Field
+            label="Password"
+            type="password"
+            value={password}
+            onChange={setPassword}
+            hint="At least 8 characters"
+          />
+
+          <Field
+            label="Phone (optional)"
+            value={phone}
+            onChange={setPhone}
+            required={false}
+          />
+        </div>
+      )}
+
+      {/* STEP 4 */}
+
+      {step === 3 && (
+        <div className="flex flex-col gap-4">
+          <h2 className="text-center font-heading text-2xl italic text-rose-deep">
+            Where should it go?
+          </h2>
+
+          <Field
+            label="Address line 1"
+            value={addressLine1}
+            onChange={setAddressLine1}
+          />
+
+          <Field
+            label="Address line 2 (optional)"
+            value={addressLine2}
+            onChange={setAddressLine2}
+            required={false}
+          />
+
+          <div className="grid grid-cols-2 gap-3">
+            <Field
+              label="City"
+              value={city}
+              onChange={setCity}
+            />
+
+            <Field
+              label="Postcode"
+              value={postcode}
+              onChange={setPostcode}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* STEP 5 */}
+
+      {step === 4 && kit && (
+        <div className="flex flex-col gap-6">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-rose">
+              Mama Nest
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl italic text-rose-deep">
+              Your health check is ready.
+            </h2>
+
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-ink/60">
+              We&apos;ll time your test kit around your sixth week, so it&apos;s
+              ready when you need it.
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-blush p-6">
+            <p className="font-heading text-xl italic text-rose-deep">
+              Your postpartum health check
+            </p>
+
+            <p className="mt-2 text-sm leading-6 text-ink/65">
+              A simple at-home check for important health markers after birth.
+            </p>
+
+            <div className="mt-6 flex flex-col gap-3">
+              {["Iron", "Thyroid", "Vitamin D"].map((test) => (
+                <div
+                  key={test}
+                  className="flex items-center gap-3 text-sm text-ink/75"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-offwhite">
+                    <Check size={13} className="text-rose" />
+                  </span>
+
+                  {test}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 border-t border-rose/10 pt-5">
+              <p className="text-xs leading-5 text-ink/55">
+                Your sample is collected from home and reviewed by a
+                qualified clinician before your results and next steps are
+                provided.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between rounded-2xl border border-rose/15 px-5 py-4">
+            <span className="text-sm font-medium text-ink/70">
+              Total, one-off
+            </span>
+
+            <span className="font-heading text-2xl italic text-rose-deep">
+              {formatGBP(kit.pricePence)}
+            </span>
+          </div>
+
+          {error && (
+            <p className="text-center text-sm text-rose">
+              {error}
             </p>
           )}
-
         </div>
+      )}
 
-        <span
-          className={cn(
-            "mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all",
-            selected
-              ? "border-[#9B6664] bg-[#9B6664] text-white"
-              : "border-[#CFC4BD] text-transparent"
-          )}
-        >
-          <Check size={12} />
-        </span>
+      {/* NAVIGATION */}
 
+      <div className="mt-8 flex items-center justify-between">
+        {step > 0 ? (
+          <Button
+            variant="ghost"
+            size="md"
+            icon={ArrowLeft}
+            onClick={() => setStep((s) => s - 1)}
+          >
+            Back
+          </Button>
+        ) : (
+          <span />
+        )}
+
+        {step < 4 ? (
+          <Button
+            size="md"
+            icon={ArrowRight}
+            iconPosition="right"
+            disabled={!canContinue}
+            className={!canContinue ? "opacity-40" : ""}
+            onClick={() => setStep((s) => s + 1)}
+          >
+            Continue
+          </Button>
+        ) : (
+          <Button
+            size="md"
+            icon={submitting ? Loader2 : ArrowRight}
+            iconPosition="right"
+            onClick={handleSubmit}
+            disabled={submitting}
+          >
+            {submitting
+              ? "Just a moment…"
+              : "Continue to payment"}
+          </Button>
+        )}
       </div>
-    </button>
+    </div>
   );
 }
-
-/* ============================================================
-   FIELD
-============================================================ */
 
 function Field({
   label,
@@ -556,34 +453,33 @@ function Field({
 }: {
   label: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (v: string) => void;
   type?: string;
   hint?: string;
   required?: boolean;
 }) {
   return (
-    <label className="flex flex-col gap-2 text-sm">
-
-      <span className="font-medium text-[#403630]">
+    <label className="flex flex-col gap-1.5 text-sm">
+      <span className="font-medium text-ink/80">
         {label}
+
         {required && (
-          <span className="ml-1 text-[#9B6664]">*</span>
+          <span className="text-rose"> *</span>
         )}
       </span>
 
       <input
         type={type}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-xl border border-[#D9CFC8] bg-[#FFFCF9] px-4 text-sm text-[#302824] outline-none transition-all placeholder:text-[#A79C96] focus:border-[#9B6664] focus:ring-2 focus:ring-[#9B6664]/10"
+        onChange={(e) => onChange(e.target.value)}
+        className="rounded-xl border border-rose/20 bg-offwhite px-4 py-2.5 outline-none focus:border-rose"
       />
 
       {hint && (
-        <span className="text-[11px] text-[#9A8F89]">
+        <span className="text-xs text-ink/40">
           {hint}
         </span>
       )}
-
     </label>
   );
 }
