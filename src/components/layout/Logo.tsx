@@ -1,14 +1,14 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export function Logo({ dark }: { dark?: boolean }) {
   return (
-    <Image
-      src="/images/mama-nest-logo.JPG"
-      alt="Mama Nest"
-      width={160}
-      height={50}
-      priority
-      className="h-auto w-[140px] object-contain"
-    />
+    <Link
+      href="/"
+      className={`font-heading text-2xl italic tracking-[-0.03em] ${
+        dark ? "text-offwhite" : "text-[#302824]"
+      }`}
+    >
+      Mama Nest
+    </Link>
   );
 }
