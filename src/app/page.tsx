@@ -40,24 +40,29 @@ export default function HomePage() {
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((current) => (current + 1) % heroImages.length);
+    const timer = window.setInterval(() => {
+      setCurrentImage((previous) => {
+        if (previous === heroImages.length - 1) {
+          return 0;
+        }
+
+        return previous + 1;
+      });
     }, 6500);
 
-    return () => clearInterval(interval);
+    return () => window.clearInterval(timer);
   }, []);
 
   return (
     <main className="bg-[#F8F5F0] text-[#302824]">
       {/* =====================================================
-          HERO SLIDESHOW
+          HERO
       ====================================================== */}
 
       <section className="relative min-h-screen overflow-hidden">
-        {/* Header */}
         <Header />
 
-        {/* Slideshow */}
+        {/* HERO SLIDESHOW */}
         <div className="absolute inset-0">
           {heroImages.map((image, index) => (
             <img
@@ -71,7 +76,6 @@ export default function HomePage() {
             />
           ))}
 
-          {/* Editorial overlays */}
           <div className="absolute inset-0 bg-[#302824]/25" />
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#302824]/75 via-[#302824]/35 to-transparent" />
@@ -79,7 +83,6 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#302824]/55 via-transparent to-transparent" />
         </div>
 
-        {/* Hero content */}
         <Container className="relative z-10 flex min-h-screen items-end pb-20 pt-32 lg:pb-28">
           <div className="max-w-2xl text-[#F8F5F0]">
             <Reveal>
@@ -141,11 +144,11 @@ export default function HomePage() {
           </div>
         </Container>
 
-        {/* Slideshow controls */}
+        {/* SLIDESHOW INDICATORS */}
         <div className="absolute bottom-8 right-6 z-20 flex items-center gap-2 lg:right-12">
-          {heroImages.map((_, index) => (
+          {heroImages.map((image, index) => (
             <button
-              key={index}
+              key={image}
               type="button"
               aria-label={`Show slide ${index + 1}`}
               onClick={() => setCurrentImage(index)}
@@ -343,5 +346,5 @@ export default function HomePage() {
 
       <Footer />
     </main>
-  ); 
-}
+  );
+} 
