@@ -9,10 +9,9 @@ export async function updateSession(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-  // If Supabase isn't configured in Vercel yet,
-  // allow the public website to load normally.
+  // Allow the public website to load if Supabase
+  // environment variables haven't been configured yet.
   if (!supabaseUrl || !supabaseKey) {
-    console.warn("Supabase environment variables are missing.");
     return supabaseResponse;
   }
 
@@ -45,3 +44,4 @@ export async function updateSession(request: NextRequest) {
   await supabase.auth.getUser();
 
   return supabaseResponse;
+}
