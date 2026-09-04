@@ -5,18 +5,22 @@
      MAMA NEST — LUXURY EDITORIAL PALETTE
      ===================================================== */
 
-  --ivory: #f7f4ef;
-  --paper: #fbfaf7;
-  --stone: #e8e2da;
+  /* The approved blush / rose-gold / plum palette from the homepage
+     redesign — these were the placeholder editorial names, now carrying
+     the real values so the whole site (not just the homepage) is one
+     consistent identity. */
+  --ivory: #fbf0ef;
+  --paper: #ffffff;
+  --stone: #f1dce0;
 
-  --espresso: #292421;
-  --espresso-soft: #514943;
+  --espresso: #3d2a2e;
+  --espresso-soft: #8c6c72;
 
-  --oxblood: #713f42;
-  --oxblood-light: #9b6868;
+  --oxblood: #a24f65;
+  --oxblood-light: #be6e82;
 
-  --sand: #cdbfb2;
-  --blush: #e8d6d0;
+  --sand: #c6a06a;
+  --blush: #f3cbd3;
 
   --background: var(--ivory);
   --foreground: var(--espresso);

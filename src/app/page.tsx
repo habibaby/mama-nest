@@ -1,304 +1,190 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { ArrowRight, Check, ChevronDown } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { CultureSelector } from "@/components/home/CultureSelector";
 
-const heroImages = [
-  "/images/Mama-nest bathroom.jpg",
-  "/images/Mama-nest black woman.JPG",
-  "/images/Mama-nest looking window.JPG",
-  "/images/Mama-nest walking.jpg",
+const avatars = [
+  { src: "/images/culture-hausa.jpg", label: "Hausa" },
+  { src: "/images/culture-igbo.jpg", label: "Igbo" },
+  { src: "/images/culture-yoruba.jpg", label: "Yoruba" },
+  { src: "/images/culture-fulani.jpg", label: "Fulani" },
+  { src: "/images/culture-efik.jpg", label: "Efik" },
+  { src: "/images/culture-edo.jpg", label: "Edo" },
+  { src: "/images/culture-delta.jpg", label: "Delta" },
 ];
 
-const features = [
-  {
-    number: "01",
-    title: "Practical postpartum care",
-    description:
-      "Book a trained Mama Nest Aunty for meals, baby support and help around the house — you choose the package, we arrange the rest.",
-  },
-  {
-    number: "02",
-    title: "Your culture, matched",
-    description:
-      "Yoruba, Igbo, Hausa, Edo or Delta — your meals, ingredients and care routine follow your own pathway.",
-  },
-  {
-    number: "03",
-    title: "An at-home health check",
-    description:
-      "Iron, thyroid and vitamin D, timed to your sixth week — the exact point the NHS stops checking on you.",
-  },
+const services = [
+  { title: "Postpartum Care", text: "Book a Mama Nest Aunty for practical support at home.", href: "/care", cta: "Explore care" },
+  { title: "Postpartum Meals", text: "Order culturally familiar meals prepared for you.", href: "/meals", cta: "See meals" },
+  { title: "Ingredients", text: "Shop ingredients for your postpartum meals.", href: "/ingredients", cta: "Shop ingredients" },
+  { title: "Postpartum Products", text: "Shop products for your preparation and recovery.", href: "/products", cta: "Shop products" },
+  { title: "Custom Care", text: "Need something different? Request a personalised quote.", href: "/booking", cta: "Request a quote" },
+  { title: "Overnight Care", text: "Request additional or overnight postpartum support.", href: "/booking", cta: "Request overnight care" },
+  { title: "Postpartum Test", text: "Check your iron, thyroid and vitamin D levels from home.", href: "/start", cta: "About the test" },
+];
+
+const dishes = [
+  { name: "Ji Mmiri Oku", note: "Igbo · yam pepper soup" },
+  { name: "Kunun Kanwa", note: "Hausa · warm sour gruel" },
+  { name: "Miyan Kuka", note: "Hausa · baobab-leaf soup" },
+  { name: "Owo Soup", note: "Delta · palm-oil soup & starch" },
 ];
 
 export default function HomePage() {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setCurrentImage((previous) => {
-        if (previous === heroImages.length - 1) {
-          return 0;
-        }
-
-        return previous + 1;
-      });
-    }, 6500);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
   return (
     <main className="bg-[#F8F5F0] text-[#302824]">
-      {/* =====================================================
-          HERO
-      ====================================================== */}
+      <Header />
 
-      <section className="relative min-h-screen overflow-hidden">
-        <Header />
+      {/* HERO */}
+      <section className="relative overflow-hidden pt-32 pb-20 text-center lg:pt-40 lg:pb-28">
+        <Container className="relative">
+          <Reveal>
+            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#9B6664]">
+              Postpartum support for mothers in the UK
+            </p>
+          </Reveal>
 
-        {/* HERO SLIDESHOW */}
-        <div className="absolute inset-0">
-          {heroImages.map((image, index) => (
-            <img
-              key={image}
-              src={image}
-              alt=""
-              aria-hidden="true"
-              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1800ms] ease-in-out ${
-                index === currentImage ? "opacity-100" : "opacity-0"
-              }`}
-            />
-          ))}
+          <Reveal delay={100}>
+            <h1 className="mx-auto mt-6 max-w-2xl font-heading text-5xl leading-[1.05] tracking-[-0.02em] sm:text-6xl lg:text-7xl">
+              Welcome, Mama.
+              <br />
+              <span className="italic text-[#9B6664]">You deserve to be pampered.</span>
+            </h1>
+          </Reveal>
 
-          <div className="absolute inset-0 bg-[#302824]/25" />
+          <Reveal delay={180}>
+            <p className="mx-auto mt-7 max-w-xl text-base leading-7 text-[#655B56] sm:text-lg">
+              Culturally familiar postpartum support, nourishing meals and practical help — for mothers across the UK.
+            </p>
+          </Reveal>
 
-          <div className="absolute inset-0 bg-gradient-to-r from-[#302824]/75 via-[#302824]/35 to-transparent" />
+          <Reveal delay={240}>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Button href="/booking" size="lg" icon={ArrowRight}>
+                Get started
+              </Button>
+              <Button href="/care" variant="ghost" size="lg">
+                Explore Postpartum Care
+              </Button>
+            </div>
+          </Reveal>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-[#302824]/55 via-transparent to-transparent" />
-        </div>
-
-        <Container className="relative z-10 flex min-h-screen items-end pb-20 pt-32 lg:pb-28">
-          <div className="max-w-2xl text-[#F8F5F0]">
-            <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#F1D9D1]">
-                For the mother, not just the baby
-              </p>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <h1 className="mt-6 max-w-xl font-heading text-[58px] leading-[0.92] tracking-[-0.045em] sm:text-7xl lg:text-[86px]">
-                Someone should
-                <br />
-                check on
-                <br />
-                <span className="italic text-[#F0C7BE]">you too.</span>
-              </h1>
-            </Reveal>
-
-            <Reveal delay={180}>
-              <p className="mt-7 max-w-lg text-base leading-7 text-[#F8F5F0]/90 sm:text-lg">
-                Culturally familiar postpartum support, nourishing meals and
-                practical help — for mothers across the UK. An at-home health
-                check is available too.
-              </p>
-            </Reveal>
-
-            <Reveal delay={260}>
-              <div className="mt-8 flex flex-wrap items-center gap-5">
-                <Button
-                  href="/booking"
-                  size="lg"
-                  icon={ArrowRight}
-                  className="rounded-full bg-[#F8F5F0] px-8 text-[#302824] shadow-xl hover:bg-white"
-                >
-                  Get started
-                </Button>
-
-                <a
-                  href="#what-we-do"
-                  className="group flex items-center gap-2 text-sm font-medium text-[#F8F5F0]"
-                >
-                  See how it works
-                  <ChevronDown
-                    size={16}
-                    className="transition-transform group-hover:translate-y-1"
+          <Reveal delay={320}>
+            <div className="mt-16 flex flex-wrap justify-center gap-6 sm:gap-8">
+              {avatars.map((a) => (
+                <div key={a.label} className="flex flex-col items-center gap-2.5">
+                  <img
+                    src={a.src}
+                    alt={`${a.label} portrait`}
+                    className="h-20 w-20 rounded-full border-2 border-[#C6A06A] object-cover shadow-lg shadow-[#A24F65]/10 sm:h-24 sm:w-24"
                   />
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={340}>
-              <div className="mt-8 flex items-center gap-3 text-xs text-[#F8F5F0]/75">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-[#F8F5F0]/50">
-                  <Check size={13} />
-                </span>
-
-                Choose your culture — Mama Nest arranges the rest
-              </div>
-            </Reveal>
-          </div>
-        </Container>
-
-        {/* SLIDESHOW INDICATORS */}
-        <div className="absolute bottom-8 right-6 z-20 flex items-center gap-2 lg:right-12">
-          {heroImages.map((image, index) => (
-            <button
-              key={image}
-              type="button"
-              aria-label={`Show slide ${index + 1}`}
-              onClick={() => setCurrentImage(index)}
-              className={`h-1 rounded-full transition-all duration-500 ${
-                index === currentImage
-                  ? "w-10 bg-[#F8F5F0]"
-                  : "w-4 bg-[#F8F5F0]/50"
-              }`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* =====================================================
-          INTRO
-      ====================================================== */}
-
-      <section
-        id="what-we-do"
-        className="border-y border-[#DED6D0] bg-[#F8F5F0] py-24 lg:py-32"
-      >
-        <Container>
-          <div className="mx-auto max-w-4xl text-center">
-            <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#9B6664]">
-                Your six-week check
-              </p>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <h2 className="mt-7 font-heading text-5xl leading-[1.05] tracking-[-0.02em] text-[#302824] sm:text-6xl lg:text-7xl">
-                Everyone checks on the baby.
-                <br />
-                <span className="italic text-[#9B6664]">
-                  We check on you.
-                </span>
-              </h2>
-            </Reveal>
-
-            <Reveal delay={180}>
-              <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-[#655B56]">
-                Mama Nest helps you prepare for and receive culturally
-                familiar postpartum support in the UK — meals, practical
-                help, and a trained Mama Nest Aunty when you book care.
-              </p>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* =====================================================
-          THREE POINT SECTION
-      ====================================================== */}
-
-      <section className="bg-[#302824] py-24 text-[#F8F5F0] lg:py-32">
-        <Container>
-          <div className="grid gap-16 lg:grid-cols-[0.75fr_1.25fr]">
-            <Reveal>
-              <div className="lg:sticky lg:top-24">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#D1A39A]">
-                  What Mama Nest does
-                </p>
-
-                <h2 className="mt-7 font-heading text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-                  A check
-                  <br />
-                  designed
-                  <br />
-                  <span className="italic text-[#D1A39A]">for you.</span>
-                </h2>
-
-                <p className="mt-8 max-w-sm text-sm leading-7 text-[#C9BFBA]">
-                  Not just a test. A simple way to understand what your body
-                  may need after birth.
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="divide-y divide-[#514742]">
-              {features.map((feature, index) => (
-                <Reveal key={feature.number} delay={index * 100}>
-                  <div className="grid gap-6 py-12 sm:grid-cols-[90px_1fr]">
-                    <span className="font-mono text-xs tracking-[0.2em] text-[#92706C]">
-                      {feature.number}
-                    </span>
-
-                    <div>
-                      <h3 className="font-heading text-4xl italic text-[#F8F5F0] sm:text-5xl">
-                        {feature.title}
-                      </h3>
-
-                      <p className="mt-4 max-w-lg text-sm leading-7 text-[#C9BFBA]">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
+                  <span className="text-[11px] font-semibold uppercase tracking-wide text-[#655B56]">{a.label}</span>
+                </div>
               ))}
             </div>
-          </div>
+            <p className="mt-8 font-heading text-lg italic text-[#655B56]">
+              Care that feels familiar, whichever home you come from.
+            </p>
+          </Reveal>
         </Container>
       </section>
 
-      {/* =====================================================
-          LIFESTYLE
-      ====================================================== */}
-
-      <section className="bg-[#F8F5F0] py-24 lg:py-32">
+      {/* ABOUT */}
+      <section className="border-y border-[#DED6D0] py-24 lg:py-32">
         <Container>
           <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
             <Reveal>
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[32px]">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#9B6664]">What is Mama Nest?</p>
+                <h2 className="mt-6 font-heading text-4xl leading-[1.05] sm:text-5xl">Postpartum support that feels like home.</h2>
+                <p className="mt-6 max-w-lg text-base leading-7 text-[#655B56]">
+                  Mama Nest helps you prepare for and receive culturally familiar postpartum support in the UK — home-cooked
+                  meals, practical help around the house, and a trained Mama Nest Aunty when you book care. An optional
+                  health check (thyroid, vitamin D and iron) is available too.
+                </p>
+              </div>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="relative aspect-[4/3.6] overflow-hidden rounded-[32px]">
                 <img
-                  src="/images/mama-resting.JPG"
-                  alt="Mother taking a quiet moment for herself at home"
+                  src="/images/feature-caregiver.jpg"
+                  alt="A Mama Nest caregiver visiting a new mother and her baby at home"
                   className="h-full w-full object-cover"
                 />
               </div>
             </Reveal>
+          </div>
+        </Container>
+      </section>
 
+      {/* SERVICES */}
+      <section className="py-24 lg:py-32">
+        <Container>
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#9B6664]">Choose your care</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="mt-6 font-heading text-4xl sm:text-5xl">What can we help you with?</h2>
+            </Reveal>
+            <Reveal delay={140}>
+              <p className="mt-4 text-base leading-7 text-[#655B56]">Pick what you need — browsing is always free, no account required.</p>
+            </Reveal>
+          </div>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((s, i) => (
+              <Reveal key={s.title} delay={i * 50}>
+                <a
+                  href={s.href}
+                  className="flex h-full flex-col gap-3 rounded-3xl border border-rose/10 bg-offwhite p-6 shadow-xl shadow-rose-deep/5 transition-transform hover:-translate-y-1"
+                >
+                  <h3 className="font-heading text-xl italic text-rose-deep">{s.title}</h3>
+                  <p className="text-sm leading-6 text-ink/65">{s.text}</p>
+                  <span className="mt-auto text-xs font-semibold uppercase tracking-wide text-rose">{s.cta} →</span>
+                </a>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal delay={services.length * 50}>
+            <CultureSelector />
+          </Reveal>
+        </Container>
+      </section>
+
+      {/* MEALS */}
+      <section className="border-y border-[#DED6D0] py-24 lg:py-32">
+        <Container>
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+            <Reveal>
+              <div className="relative aspect-[4/3.6] overflow-hidden rounded-[32px]">
+                <img
+                  src="/images/feature-cooking.jpg"
+                  alt="A Mama Nest cook preparing a postpartum meal in the kitchen"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </Reveal>
             <Reveal delay={120}>
-              <div className="max-w-xl">
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#9B6664]">
-                  Made for mothers
-                </p>
-
-                <h2 className="mt-7 font-heading text-5xl leading-[1.03] text-[#302824] sm:text-6xl">
-                  Your health
-                  <br />
-                  deserves
-                  <br />
-                  <span className="italic text-[#9B6664]">
-                    checking too.
-                  </span>
-                </h2>
-
-                <p className="mt-8 max-w-lg text-base leading-8 text-[#655B56]">
-                  No complicated journey. Just a thoughtful way to understand
-                  more about what is happening inside your body after birth.
-                </p>
-
-                <div className="mt-9">
-                  <Button
-                    href="/booking"
-                    size="lg"
-                    icon={ArrowRight}
-                    className="rounded-full bg-[#302824] px-8 text-[#F8F5F0] hover:bg-[#453A35]"
-                  >
-                    Get started
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#9B6664]">A taste of home</p>
+                <h2 className="mt-6 font-heading text-4xl leading-[1.05] sm:text-5xl">Meals worth resting for.</h2>
+                <p className="mt-4 text-base leading-7 text-[#655B56]">Order them prepared, or shop the ingredients yourself.</p>
+                <div className="mt-8 grid grid-cols-2 gap-4">
+                  {dishes.map((d) => (
+                    <div key={d.name} className="rounded-2xl bg-blush/40 px-4 py-3">
+                      <p className="font-heading text-base italic text-rose-deep">{d.name}</p>
+                      <p className="mt-0.5 text-xs text-ink/60">{d.note}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Button href="/meals" variant="outline" size="md">
+                    See the full menu →
                   </Button>
                 </div>
               </div>
@@ -307,39 +193,41 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* =====================================================
-          FINAL CTA
-      ====================================================== */}
+      {/* CTA BAND */}
+      <section className="py-24 lg:py-32">
+        <Container>
+          <Reveal>
+            <div className="mx-auto max-w-2xl rounded-[32px] border border-rose/10 bg-offwhite px-8 py-14 text-center shadow-xl shadow-rose-deep/5">
+              <h2 className="font-heading text-4xl italic text-rose-deep">Ready to begin?</h2>
+              <p className="mt-3 text-base text-ink/65">Book your postpartum care, or explore what&apos;s available first.</p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <Button href="/booking" size="lg">
+                  Start your booking
+                </Button>
+                <Button href="/account" variant="ghost" size="lg">
+                  View my dashboard
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
 
+      {/* FAQ TEASER */}
       <section className="bg-[#9B6664] py-24 text-[#F8F5F0] lg:py-32">
         <Container className="text-center">
           <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#EBD3CC]">
-              Mama Nest
-            </p>
+            <h2 className="font-heading text-4xl sm:text-5xl">Got questions?</h2>
           </Reveal>
-
           <Reveal delay={100}>
-            <h2 className="mx-auto mt-7 max-w-4xl font-heading text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
-              For the mother, not just the baby.
-            </h2>
-          </Reveal>
-
-          <Reveal delay={180}>
-            <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-[#F3DDD7]">
-              Made for mothers, by a mother.
+            <p className="mx-auto mt-4 max-w-xl text-base text-[#F3DDD7]">
+              Booking, culture, what&apos;s included, birth activation — it&apos;s all in our FAQ.
             </p>
           </Reveal>
-
-          <Reveal delay={240}>
-            <div className="mt-10">
-              <Button
-                href="/start"
-                size="lg"
-                icon={ArrowRight}
-                className="rounded-full bg-[#F8F5F0] px-9 text-[#302824] hover:bg-white"
-              >
-                Get started
+          <Reveal delay={180}>
+            <div className="mt-9">
+              <Button href="/faq" size="lg" className="rounded-full bg-[#F8F5F0] px-9 text-[#302824] hover:bg-white">
+                Read the FAQ →
               </Button>
             </div>
           </Reveal>
@@ -349,4 +237,4 @@ export default function HomePage() {
       <Footer />
     </main>
   );
-} 
+}
