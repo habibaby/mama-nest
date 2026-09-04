@@ -39,6 +39,17 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Aliases — a lot of existing components (Button, Footer, the account
+     pages, the start wizard) were written against these names before the
+     palette above was finalised. Rather than touch every className, the
+     names resolve to the same luxury-editorial palette. */
+  --color-ink: var(--espresso);
+  --color-cream: var(--ivory);
+  --color-offwhite: var(--paper);
+  --color-rose: var(--oxblood-light);
+  --color-rose-deep: var(--oxblood);
+  --color-gold: var(--sand);
+
   --font-heading: var(--font-fraunces);
   --font-sans: var(--font-manrope);
 }

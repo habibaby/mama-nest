@@ -18,28 +18,21 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden items-center gap-10 md:flex">
           <Link
-            href="#testing"
+            href="/care"
             className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#302824]/70 transition-colors hover:text-[#302824]"
           >
-            Testing
+            Postpartum Care
           </Link>
 
           <Link
-            href="#how-it-works"
+            href="/how-it-works"
             className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#302824]/70 transition-colors hover:text-[#302824]"
           >
-            How it works
+            The Test
           </Link>
 
           <Link
-            href="#our-approach"
-            className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#302824]/70 transition-colors hover:text-[#302824]"
-          >
-            Our approach
-          </Link>
-
-          <Link
-            href="#faq"
+            href="/faq"
             className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#302824]/70 transition-colors hover:text-[#302824]"
           >
             FAQ
@@ -56,7 +49,7 @@ export function Header() {
           </Link>
 
           <Link
-            href="/start"
+            href="/booking"
             className="rounded-full bg-[#302824] px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F8F5F0] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#463A34]"
           >
             Get started

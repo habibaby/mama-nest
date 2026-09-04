@@ -18,21 +18,21 @@ const heroImages = [
 const features = [
   {
     number: "01",
-    title: "Your at-home test",
+    title: "Practical postpartum care",
     description:
-      "Iron, thyroid, vitamin D. Done around week six, from home.",
+      "Book a trained Mama Nest Aunty for meals, baby support and help around the house — you choose the package, we arrange the rest.",
   },
   {
     number: "02",
-    title: "A plan, not just numbers",
+    title: "Your culture, matched",
     description:
-      "Results come with a clear next step: reassurance, or exactly what to raise with your GP.",
+      "Yoruba, Igbo, Hausa, Edo or Delta — your meals, ingredients and care routine follow your own pathway.",
   },
   {
     number: "03",
-    title: "We check on you",
+    title: "An at-home health check",
     description:
-      "Reminders timed to when you actually need them, not a generic countdown.",
+      "Iron, thyroid and vitamin D, timed to your sixth week — the exact point the NHS stops checking on you.",
   },
 ];
 
@@ -103,15 +103,16 @@ export default function HomePage() {
 
             <Reveal delay={180}>
               <p className="mt-7 max-w-lg text-base leading-7 text-[#F8F5F0]/90 sm:text-lg">
-                Your six-week check looks at the baby. We look at you — with
-                an at-home test for iron, thyroid, and vitamin D.
+                Culturally familiar postpartum support, nourishing meals and
+                practical help — for mothers across the UK. An at-home health
+                check is available too.
               </p>
             </Reveal>
 
             <Reveal delay={260}>
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <Button
-                  href="/start"
+                  href="/booking"
                   size="lg"
                   icon={ArrowRight}
                   className="rounded-full bg-[#F8F5F0] px-8 text-[#302824] shadow-xl hover:bg-white"
@@ -138,7 +139,7 @@ export default function HomePage() {
                   <Check size={13} />
                 </span>
 
-                Iron · Thyroid · Vitamin D
+                Choose your culture — Mama Nest arranges the rest
               </div>
             </Reveal>
           </div>
@@ -190,8 +191,9 @@ export default function HomePage() {
 
             <Reveal delay={180}>
               <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-[#655B56]">
-                A simple at-home health check designed around the postpartum
-                mother — with testing, clinical review, and a clear next step.
+                Mama Nest helps you prepare for and receive culturally
+                familiar postpartum support in the UK — meals, practical
+                help, and a trained Mama Nest Aunty when you book care.
               </p>
             </Reveal>
           </div>
@@ -291,7 +293,7 @@ export default function HomePage() {
 
                 <div className="mt-9">
                   <Button
-                    href="/start"
+                    href="/booking"
                     size="lg"
                     icon={ArrowRight}
                     className="rounded-full bg-[#302824] px-8 text-[#F8F5F0] hover:bg-[#453A35]"

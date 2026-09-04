@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Heart, CalendarHeart } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/layout/Logo";
@@ -37,7 +38,9 @@ export default async function OrderConfirmationPage({
   return (
     <div className="flex min-h-screen flex-col items-center bg-cream px-6 py-16">
       <div className="mb-8">
-        <Logo />
+        <Link href="/" aria-label="Mama Nest home">
+          <Logo />
+        </Link>
       </div>
       <div className="w-full max-w-lg rounded-3xl border border-rose/10 bg-offwhite p-8 text-center shadow-xl shadow-rose-deep/5 sm:p-10">
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-blush text-rose-deep">

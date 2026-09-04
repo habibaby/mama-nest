@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatGBP } from "@/lib/utils";
 import { Logo } from "@/components/layout/Logo";
@@ -24,7 +25,9 @@ export default async function DemoCheckoutPage({
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-cream px-6 py-16">
       <div className="mb-8">
-        <Logo />
+        <Link href="/" aria-label="Mama Nest home">
+          <Logo />
+        </Link>
       </div>
       <div className="w-full max-w-md rounded-3xl border border-rose/10 bg-offwhite p-8 shadow-xl shadow-rose-deep/5">
         <h1 className="text-center font-heading text-2xl italic text-rose-deep">Almost there</h1>

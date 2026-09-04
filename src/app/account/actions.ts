@@ -56,3 +56,25 @@ export async function logBirth(pregnancyId: string, babyDob: string) {
   revalidatePath("/account");
   return {};
 }
+
+/**
+ * "I've Given Birth — Activate My Care." Flips a booking from a request
+ * into something Mama Nest's ops team acts on. Deliberately simple — no
+ * real caregiver-allocation system exists yet, so this only records the
+ * state transition; a human on the Mama Nest side does the actual
+ * matching once notified.
+ */
+export async function activateBooking(bookingId: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("bookings")
+    .update({ status: "birth_activated", birth_activated_at: new Date().toISOString() })
+    .eq("id", bookingId)
+    .eq("status", "requested");
+
+  if (error) return { error: error.message };
+
+  revalidatePath("/account");
+  return {};
+}

@@ -5,7 +5,26 @@ import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/layout/Logo";
 import { formatGBP } from "@/lib/utils";
 import { BirthAnnouncementForm } from "@/components/account/BirthAnnouncementForm";
+import { ActivateCareButton } from "@/components/account/ActivateCareButton";
 import { signOutAction } from "@/app/account/actions";
+import { CULTURES, type CultureKey } from "@/lib/data/cultures";
+
+const SERVICE_LABELS: Record<string, string> = {
+  care_7: "7-Day Care",
+  care_14: "14-Day Care",
+  care_30: "30-Day Care",
+  custom: "Custom Care",
+  overnight: "Overnight Care",
+};
+
+const BOOKING_STATUS_LABELS: Record<string, string> = {
+  requested: "Booking requested",
+  birth_activated: "Care being arranged",
+  care_scheduled: "Care scheduled",
+  care_active: "Care in progress",
+  care_completed: "Care completed",
+  cancelled: "Cancelled",
+};
 
 const REMINDER_COPY: Record<string, string> = {
   congratulations: "Congratulations message",
@@ -29,7 +48,7 @@ export default async function AccountPage() {
 
   const { data: pregnancy } = await supabase
     .from("pregnancies")
-    .select("id, status, edd, baby_dob")
+    .select("id, status, edd, baby_dob, culture, preferred_language")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(1)
@@ -50,6 +69,17 @@ export default async function AccountPage() {
         .eq("order_id", order.id)
         .order("scheduled_for", { ascending: true })
     : { data: null };
+
+  const { data: bookings } = await supabase
+    .from("bookings")
+    .select("id, service, add_test, location, status")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  const cultureLabel =
+    pregnancy?.culture && pregnancy.culture in CULTURES
+      ? CULTURES[pregnancy.culture as CultureKey].label
+      : null;
 
   return (
     <div className="min-h-screen bg-cream px-6 py-10">
@@ -80,6 +110,39 @@ export default async function AccountPage() {
             <p className="mt-1 text-sm text-ink/60">
               Baby born {new Date(pregnancy.baby_dob!).toLocaleDateString("en-GB")}
             </p>
+          )}
+          {cultureLabel && <p className="mt-1 text-xs text-rose">{cultureLabel} pathway</p>}
+
+          {bookings && bookings.length > 0 && (
+            <div className="mt-5 flex flex-col gap-3">
+              {bookings.map((b) => (
+                <div key={b.id} className="rounded-xl bg-blush/40 px-4 py-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-ink/70">
+                      {SERVICE_LABELS[b.service] ?? b.service}
+                      {b.add_test ? " + test" : ""}
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-rose-deep">
+                      {BOOKING_STATUS_LABELS[b.status] ?? b.status}
+                    </span>
+                  </div>
+                  {b.status === "requested" && (
+                    <div className="mt-3">
+                      <ActivateCareButton bookingId={b.id} />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {(!bookings || bookings.length === 0) && (
+            <div className="mt-5 rounded-xl border border-dashed border-rose/25 px-4 py-3 text-sm text-ink/60">
+              No postpartum care booked yet.{" "}
+              <Link href="/booking" className="font-semibold text-rose-deep hover:underline">
+                Book your care
+              </Link>
+            </div>
           )}
 
           {order && (
